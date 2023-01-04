@@ -18,7 +18,8 @@ describe 'Url API' do
         let(:body) { { url: 'https://google.com' } }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data[:url]).to include(request.domain)
+          expect(data['url']).to include(request.base_url)
+          expect(data['url'].length).to eq(request.base_url.length + 8)
         end
       end
     end
