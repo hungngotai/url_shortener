@@ -10,7 +10,8 @@ class UrlShortenerService
   end
 
   def call
-    Url.find_or_create_by(original_url: original_url) do |url|
+    unescape_url = CGI.unescape(original_url)
+    Url.find_or_create_by(original_url: unescape_url) do |url|
       url.shortened = SecureRandom.hex.first(7)
     end.shortened
   end
