@@ -33,4 +33,35 @@ describe 'Url API' do
       end
     end
   end
+
+  path '/decoded' do
+    post 'Generate url decoded' do
+      tags 'Url'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :body, in: :body, type: :object, schema: {
+        type: :object,
+        properties: {
+          url: { type: :string }
+        },
+        required: %i[url]
+      }
+
+      response '200', 'Ok' do
+        let!(:url) { create(:url) }
+        let(:body) { { url: "http://www.example.com/#{url.shortened}" } }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data['url']).to eq(url.original_url)
+        end
+      end
+
+      response '404', 'Not Found' do
+        let(:body) { { url: 'https://not_found.com' } }
+
+        run_test!
+      end
+    end
+  end
 end

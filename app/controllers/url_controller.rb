@@ -8,6 +8,16 @@ class UrlController < ApplicationController
     end
   end
 
+  def decoded
+    shortened_url = URI.parse(params[:url])
+    url = Url.find_by(shortened: shortened_url.path[1..])
+    if url.present? && shortened_url.to_s == url_encoded(url)
+      render json: { url: url.original_url }, status: :ok
+    else
+      render status: :not_found
+    end
+  end
+
   private
 
   def url_encoded(url)
