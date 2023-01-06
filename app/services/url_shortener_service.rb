@@ -23,10 +23,12 @@ class UrlShortenerService
   private
 
   def counter
-    cache = Rails.cache
-    counter = cache.read(:counter).to_i
-    cache.write(:counter, counter + 1)
-    counter
+    @counter ||= begin
+      cache = Rails.cache
+      counter = cache.read(:counter).to_i
+      cache.write(:counter, counter + 1)
+      counter
+    end
   end
 
   def to_base62(decimal)
@@ -40,6 +42,6 @@ class UrlShortenerService
 
   def shortened
     url_digest_with_counter = Digest::MD5.hexdigest(original_url).to_i(16) + counter
-    to_base62(url_digest_with_counter).first(LIMIT_LENGTH)
+    to_base62(url_digest_with_counter).chars.sample(LIMIT_LENGTH).join
   end
 end
