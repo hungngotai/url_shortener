@@ -17,7 +17,16 @@ describe 'Url API' do
         required: %i[url]
       }
 
+      request_body_example value: { url: 'https://google.com' }
+
       response '201', 'Created' do
+        schema type: :object,
+          properties: {
+            url: { type: :string },
+          },
+          required: %i[url]
+        example 'application/json', 'Created', { url: 'https://domain.com/3j421k4' }
+
         let(:body) { { url: 'https://example.com' } }
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -27,6 +36,13 @@ describe 'Url API' do
       end
 
       response '400', 'Bad Request' do
+        schema type: :object,
+          properties: {
+            error: { type: :object },
+          },
+          required: %i[error]
+        example 'application/json', 'Bad Request', { error: { original_url: 'Must be valid url' } }
+
         let(:body) { { url: 'invalid url' } }
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -48,8 +64,15 @@ describe 'Url API' do
         },
         required: %i[url]
       }
+      request_body_example value: { url: 'https://domain.com/3j421k4' }
 
       response '200', 'Ok' do
+        schema type: :object,
+          properties: {
+            url: { type: :string },
+          },
+          required: %i[url]
+        example 'application/json', :created, { url: 'https://google.com' }
         let!(:url) { create(:url) }
         let(:body) { { url: "http://www.example.com/#{url.shortened}" } }
 

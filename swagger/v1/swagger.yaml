@@ -1,0 +1,103 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/encoded":
+    post:
+      summary: Generate url encoded
+      tags:
+      - Url
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                created:
+                  value:
+                    url: https://domain.com/3j421k4
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                required:
+                - url
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value:
+                    error:
+                      original_url: Must be valid url
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+              required:
+              - url
+            examples:
+              '0':
+                summary: Generate url encoded
+                value:
+                  url: https://google.com
+  "/decoded":
+    post:
+      summary: Generate url decoded
+      tags:
+      - Url
+      parameters: []
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              examples:
+                created:
+                  value:
+                    url: https://google.com
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                required:
+                - url
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+              required:
+              - url
+            examples:
+              '0':
+                summary: Generate url decoded
+                value:
+                  url: https://domain.com/3j421k4
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
