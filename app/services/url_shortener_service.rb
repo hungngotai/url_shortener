@@ -9,15 +9,11 @@ class UrlShortenerService
   end
 
   def initialize(original_url)
-    @original_url = original_url
+    @original_url = CGI.unescape(original_url)
   end
 
   def call
-    unescape_url = CGI.unescape(original_url)
-    url_with_counter = "#{unescape_url}counter=#{counter}"
-    url_md5_digest = Digest::MD5.hexdigest(url_with_counter)
-    shortened = to_base62(url_md5_digest.to_i(16)).first(LIMIT_LENGTH)
-    url = Url.new(original_url: url_with_counter, shortened: 'shortened')
+    url = Url.new(original_url: original_url, shortened: shortened)
     url.save
     url
   end
@@ -28,7 +24,7 @@ class UrlShortenerService
     cache = Rails.cache
     counter = cache.read(:counter).to_i
     cache.write(:counter, counter + 1)
-    counter.to_s
+    counter
   end
 
   def to_base62(decimal)
@@ -38,5 +34,10 @@ class UrlShortenerService
       decimal /= 62
     end
     hash_str
+  end
+
+  def shortened
+    url_digest_with_counter = Digest::MD5.hexdigest(original_url).to_i(16) + counter
+    to_base62(url_digest_with_counter).first(LIMIT_LENGTH)
   end
 end
