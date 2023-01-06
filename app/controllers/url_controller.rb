@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UrlController < ApplicationController
   def encoded
     url = UrlShortenerService.call(params[:url])

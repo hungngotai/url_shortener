@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class UrlShortenerService
   LIMIT_LENGTH = 7
-  BASE_62_STRING = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.freeze
+  BASE_62_STRING = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   attr_reader :original_url
 
