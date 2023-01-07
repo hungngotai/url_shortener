@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UrlController < ApplicationController
-  def encoded
+  def encode
     url = UrlShortenerService.call(params[:url])
     if url.errors.empty?
       render json: { url: url_encoded(url) }, status: :created
@@ -10,7 +10,7 @@ class UrlController < ApplicationController
     end
   end
 
-  def decoded
+  def decode
     shortened_url = URI.parse(params[:url])
     url = Url.find_by(shortened: shortened_url.path[1..])
     if url.present? && shortened_url.to_s == url_encoded(url)

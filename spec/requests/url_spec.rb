@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'swagger_helper'
 
 describe 'Url API' do
-  path '/encoded' do
+  path '/encode' do
     post 'Generate url encoded' do
       tags 'Url'
       consumes 'application/json'
@@ -52,7 +52,7 @@ describe 'Url API' do
     end
   end
 
-  path '/decoded' do
+  path '/decode' do
     post 'Generate url decoded' do
       tags 'Url'
       consumes 'application/json'
