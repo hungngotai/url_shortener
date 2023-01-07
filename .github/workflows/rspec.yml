@@ -11,7 +11,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PASSWORD: 123456a@
         ports:
           - 5432:5432
         options: >-
@@ -31,8 +31,9 @@ jobs:
         run: bundle install
       - name: Test with RSpec
         env:
-          RAILS_ENV: "test"
-          DATABASE_URL: "postgres://postgres@localhost:5432/url_shortener_test"
+          RAILS_ENV: test
+          DB_PASSWORD: 123456a@
+          DB_NAME: url_shortener
         run: |
           bundle exec rails db:setup
           bundle exec rspec spec/
