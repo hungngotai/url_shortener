@@ -1,0 +1,40 @@
+name: Ruby CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Ruby 3.0.0
+        uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+        with:
+          ruby-version: '3.0.0'
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - name: Test with RSpec
+        env:
+          RAILS_ENV: "test"
+          DATABASE_URL: "postgres://postgres@localhost:5432/url_shortener_test"
+        run: |
+          bundle exec rails db:setup
+          bundle exec rspec spec/
