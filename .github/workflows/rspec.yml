@@ -1,13 +1,11 @@
-name: Ruby CI
+name: Rspec
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  test:
+  rspec:
     runs-on: ubuntu-latest
     services:
       postgres:

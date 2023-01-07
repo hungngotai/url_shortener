@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/encoded":
+  "/encode":
     post:
       summary: Generate url encoded
       tags:
@@ -16,7 +16,7 @@ paths:
           content:
             application/json:
               examples:
-                created:
+                Created:
                   value:
                     url: https://domain.com/3j421k4
               schema:
@@ -57,7 +57,7 @@ paths:
                 summary: Generate url encoded
                 value:
                   url: https://google.com
-  "/decoded":
+  "/decode":
     post:
       summary: Generate url decoded
       tags:
