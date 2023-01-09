@@ -1,7 +1,7 @@
 # Content:
-  1. [Requirements](#requirements)
-  2. [Approach](#approach)
-  3. [Issues](#issues)
+  1. [Requirements](#1-requirements)
+  2. [Approach](#2-approach)
+  3. [Issues](#3-issues)
   4. [References](#4-references)
   5. [How-to](https://github.com/hungngotai/url_shortener/blob/master/how-to.md)
   6. [Api document](https://github.com/hungngotai/url_shortener/blob/master/swagger/v1/swagger.yaml)
