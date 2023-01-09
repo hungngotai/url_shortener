@@ -1,7 +1,7 @@
 # How-tos:
-  1. [Run with local machine (Linux/MacOS)](#Local)
-  1. [Run with docker](#Docker)
-  2. [Run the test cases](#Testing)
+  1. [Run with local machine (Linux/MacOS)](#local-develoment-steps)
+  1. [Run with docker](#docker-develoment-steps)
+  2. [Run the test cases](#testing)
 ## Local Develoment Steps:
 ### Prerequisites:
  1. Ruby v3.0.0
